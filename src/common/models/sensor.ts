@@ -1,7 +1,9 @@
-export class Sensor {
-    readonly id: string;
+import { Document } from 'mongoose';
+export class Sensor extends Document{
+    readonly sensorId: string;
+    readonly sensorName: string;
     readonly initiator: boolean;
-    readonly value: any;
-    readonly time: any;
-    readonly ассоunt: string;
+    readonly value: string;
+    readonly time: string;
+    readonly ассоuntMijin: string;
 }

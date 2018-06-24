@@ -5,7 +5,7 @@ import { TransactionHelper } from './blockchain/transactionHelper';
 import { SensorAccount } from './common/mijin/sensorAccount';
 import { Conveyor } from './common/helpers/conveyor';
 import { DeviceData } from './common/models/device.data';
-import { AccountHelper } from './blockchain/accountHelper'; 
+import { AccountHelper } from './blockchain/accountHelper';
 import { AppService } from './app.service';
 
 @Controller()
@@ -36,7 +36,7 @@ export class AppController {
 
   @Get('address')
   getAddress(): string {
-    return `<div>${this.accountHelper.address}</div>`
+    return `<div>${this.accountHelper.address}</div>`;
   }
 
   @Get('create-multisig')
@@ -87,8 +87,4 @@ export class AppController {
     res.status(HttpStatus.OK).json(buyerData);
   }
 
-  @Get('**')
-  notFoundPage(@Res() res) {
-    res.redirect('/');
-  }
 }

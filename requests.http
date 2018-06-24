@@ -1,4 +1,18 @@
-Get http://localhost:3000/
+Get http://localhost:3000/sensors/ 
+
+POST http://localhost:3000/sensors/create HTTP/1.1
+content-type: application/json
+
+{ 
+   "sensorId": "XYZ1",
+    "sensorName": "sensor1",
+    "initiator": false,
+    "value": "145.25",
+    "time": "Wed, 23 May 2018 08:32:39 GMT",
+    "ассоuntMijin": "JHGFFT1545GG"
+}
+
+Get http://localhost:3000/sensors/all
 
 Get https://arduino-mijin-jvatxphfut.now.sh/device/3
 
