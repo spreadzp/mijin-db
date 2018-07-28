@@ -42,19 +42,19 @@ export class AppController {
   @Get('create-multisig')
   createMultiSig(): string {
     this.sensorAccount.createMultisig();
-    return `<div>${this.path}${process.env.MULTISIG_PUB_KEY}</div>`
+    return `<div>${this.path}${process.env.MULTISIG_PUB_KEY}</div>`;
   }
 
   @Get('modify-multisig')
   modifyMultiSig(): string {
     this.accountHelper.modifyMultisig();
-    return `<div>${this.path}${process.env.MULTISIG_PUB_KEY}</div>`
+    return `<div>${this.path}${process.env.MULTISIG_PUB_KEY}</div>`;
   }
 
   @Get('create-account')
   createAccount(): string {
-    let account = this.accountHelper.createAccount();
-    return `<div>${account}</div>`
+    const account = this.accountHelper.createAccount();
+    return `<div>${account}</div>`;
   }
 
   @Get('account')
