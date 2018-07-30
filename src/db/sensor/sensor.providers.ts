@@ -1,7 +1,7 @@
 import { SensorSchema } from './shemas/sensor.shema';
 import { Connection } from 'mongoose';
-require('dotenv').config();
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export const sensorsProviders = [
   {

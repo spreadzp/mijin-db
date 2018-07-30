@@ -2,9 +2,9 @@ import { Component } from '@nestjs/common';
 import {
     PublicAccount, NamespaceHttp, NamespaceId, Account, Deadline, NetworkType,
     RegisterNamespaceTransaction, TransactionHttp, UInt64, Address
-} from 'nem2-sdk'; 
-require('dotenv').config();
-
+} from 'nem2-sdk';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class NamespaceHelper {
     namespaceHttp: NamespaceHttp;

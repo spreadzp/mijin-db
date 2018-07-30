@@ -4,7 +4,8 @@ import {
     AggregateTransaction, MosaicDefinitionTransaction, MosaicProperties, MosaicSupplyChangeTransaction,
     MosaicSupplyType, SignedTransaction, MosaicId
 } from 'nem2-sdk';
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class MosaicHelper {
 

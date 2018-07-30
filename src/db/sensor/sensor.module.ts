@@ -1,12 +1,12 @@
 import { SensorSchema } from './shemas/sensor.shema';
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SensorsController } from './sensors.controller';
-import { SensorsService } from './sensors.service';
+import { SensorController } from './sensor.controller';
+import { SensorService } from './sensor.service';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Sensor', schema: SensorSchema }])],
-  controllers: [SensorsController],
-  providers: [SensorsService],
+  controllers: [SensorController],
+  providers: [SensorService],
 })
-export class SensorsModule { }
+export class SensorModule { }

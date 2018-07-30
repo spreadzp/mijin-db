@@ -1,5 +1,5 @@
 import { TransactionHelper } from './transactionHelper';
-import { Component } from '@nestjs/common';
+import { Component, Injectable } from '@nestjs/common';
 import {
     Account, NetworkType, AccountHttp, Address,
     MosaicHttp, MosaicService, NamespaceHttp, PublicAccount,
@@ -7,10 +7,12 @@ import {
     ModifyMultisigAccountTransaction, Deadline,
     MultisigCosignatoryModificationType, MultisigCosignatoryModification,
     TransactionHttp, AggregateTransaction, UInt64, LockFundsTransaction, Listener
-} from "nem2-sdk";
-require('dotenv').config();
+} from 'nem2-sdk';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-export class AccountHelper {
+@Injectable()
+export class AccountMijinService {
     account: Account;
     address: string;
     accountHttp: AccountHttp;
@@ -100,41 +102,40 @@ export class AccountHelper {
             );
     }
 
-    createArrayPublicAccounts(publicKeys: any[]): PublicAccount[] {
-        let cosignatories: PublicAccount[] = [];
-        for (let j = 0; j < publicKeys.length; j++) {
+    createArrayPublicAccounts(namePublicKeys: string[]): PublicAccount[] {
+        const cosignatories: PublicAccount[] = [];
+        for (let j = 0; j < namePublicKeys.length; j++) {
 
-            let cosignatory = PublicAccount.createFromPublicKey(publicKeys[j], NetworkType.MIJIN_TEST);
+            const cosignatory = PublicAccount.createFromPublicKey(process.env[namePublicKeys[j]], NetworkType.MIJIN_TEST);
             console.log(' cosignatory:', cosignatory, cosignatories);
             cosignatories.push(cosignatory);
         }
         return cosignatories;
     }
 
-    public createMultisigAccount(cosignatoriesPubKeys: any[]) {
-        const account = Account.createFromPrivateKey(process.env.MULTI_PRIV_KEY, NetworkType.MIJIN_TEST);
-        let cosignatories = this.createArrayPublicAccounts(cosignatoriesPubKeys);
+    public createMultisigAccount(privateKeyNameByMultisig: string, namePublicKeys: string[]) {
+        const account = Account.createFromPrivateKey(process.env[privateKeyNameByMultisig], NetworkType.MIJIN_TEST);
+        const cosignatories = this.createArrayPublicAccounts(namePublicKeys);
         const convertIntoMultisigTransaction = this.convertIntoMultisigTransaction(cosignatories);
         const signedTransaction = account.sign(convertIntoMultisigTransaction);
         this.transactionHelper.anounce(signedTransaction);
     }
 
     private convertIntoMultisigTransaction(cosignatories: PublicAccount[]) {
-        let cosignatoriesMultisigArray: MultisigCosignatoryModification[] = [];
+        const cosignatoriesMultisigArray: MultisigCosignatoryModification[] = [];
         const numberConsignators = cosignatories.length;
         for (let i = 0; i < numberConsignators; i++) {
-
-            let newConsignatory = new MultisigCosignatoryModification(
+            const newConsignatory = new MultisigCosignatoryModification(
                 MultisigCosignatoryModificationType.Add,
                 cosignatories[i],
-            )
+            );
             cosignatoriesMultisigArray.push(newConsignatory);
         }
         return ModifyMultisigAccountTransaction.create(
             Deadline.create(),
             numberConsignators, 1,
             cosignatoriesMultisigArray,
-            NetworkType.MIJIN_TEST
+            NetworkType.MIJIN_TEST,
         );
     }
 
@@ -149,7 +150,7 @@ export class AccountHelper {
             3,
             0,
             [],
-            NetworkType.MIJIN_TEST
+            NetworkType.MIJIN_TEST,
         );
         const aggregateTransaction = AggregateTransaction.createComplete(
             Deadline.create(),
@@ -157,7 +158,7 @@ export class AccountHelper {
                 modifyMultisigAccountTransaction.toAggregate(multisigAccount),
             ],
             NetworkType.MIJIN_TEST,
-            []
+            [],
         );
 
         const signedTransaction = cosignatoryAccount.sign(aggregateTransaction);
@@ -182,9 +183,9 @@ export class AccountHelper {
             0,
             0,
             [
-                multisigCosignatoryModification
+                multisigCosignatoryModification,
             ],
-            NetworkType.MIJIN_TEST
+            NetworkType.MIJIN_TEST,
         );
 
         const aggregateTransaction = AggregateTransaction.createBonded(
@@ -192,7 +193,7 @@ export class AccountHelper {
             [
                 modifyMultisigAccountTransaction.toAggregate(multisigAccount),
             ],
-            NetworkType.MIJIN_TEST
+            NetworkType.MIJIN_TEST,
         );
 
         const signedTransaction = cosignatoryAccount.sign(aggregateTransaction);
@@ -211,19 +212,17 @@ export class AccountHelper {
         const listener = new Listener(process.env.URL);
 
         listener.open().then(() => {
-
-
             this.transactionHelper.anounce(lockFundsTransactionSigned);
             listener.confirmed(cosignatoryAccount.address)
                 .filter((transaction) => transaction.transactionInfo !== undefined
                     && transaction.transactionInfo.hash === lockFundsTransactionSigned.hash)
                 .subscribe(ignored => {
                     transactionHttp.announceAggregateBonded(signedTransaction).subscribe(
-                        x => console.log("success add new Cosignatory", x),
-                        err => console.error(err)
+                        x => console.log('success add new Cosignatory', x),
+                        err => console.error(err),
                     );
                 },
                     err => console.error(err));
         });
     }
-};
+}

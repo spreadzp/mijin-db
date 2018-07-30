@@ -5,7 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Sensor } from 'common/models/sensor';
 
 @Injectable()
-export class SensorsService {
+export class SensorService {
   constructor(@InjectModel('Sensor') private readonly sensorModel: Model<Sensor>) {}
 
   async create(createSensorDto: CreateSensorDto): Promise<Sensor> {

@@ -1,5 +1,4 @@
-import { Document } from 'mongoose';
-export class Shipment extends Document {
+export class CreateShipmentDto {
   readonly shipmentId: string;
   readonly startShipmentTime: string;
   readonly buyerCurrency: string;

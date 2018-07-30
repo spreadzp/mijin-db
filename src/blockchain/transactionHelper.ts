@@ -1,5 +1,4 @@
-import { Component } from '@nestjs/common'; 
-require('dotenv').config();
+import { Component } from '@nestjs/common';
 import {
     Address, Deadline, XEM, NetworkType,
     PlainMessage, TransferTransaction, TransactionHttp,
@@ -12,6 +11,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs';
 import { TransactionRoutesApi, ApiClient } from 'nem2-library';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class TransactionHelper {
     transactionHttp: TransactionHttp;

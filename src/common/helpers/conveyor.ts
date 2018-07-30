@@ -1,11 +1,12 @@
 import { Account } from 'nem2-sdk';
 const fileSaver = require('fs');
-require('dotenv').config();
-import { Sensor } from './../models/sensor';
-import { BuyerData } from './../models/buyer.data'; 
-import { TransactionHelper } from './../../blockchain/transactionHelper';
-import { Log } from './../models/log';
-import { DeviceData } from './../models/device.data';
+import * as dotenv from 'dotenv';
+dotenv.config();
+import { Sensor } from '../models/sensor';
+import { BuyerData } from '../models/account'; 
+import { TransactionHelper } from 'blockchain/transactionHelper';
+import { Log } from '../models/log';
+import { DeviceData } from '../models/device.data';
 import { Shipment } from '../models/shipment'; 
 
 export class Conveyor {

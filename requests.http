@@ -4,12 +4,10 @@ POST http://localhost:3000/sensors/create HTTP/1.1
 content-type: application/json
 
 { 
-   "sensorId": "XYZ1",
-    "sensorName": "sensor1",
-    "initiator": false,
-    "value": "145.25",
-    "time": "Wed, 23 May 2018 08:32:39 GMT",
-    "ассоuntMijin": "JHGFFT1545GG"
+    "sensorId": "HJGJTIUYT1545GG",
+    "sensorName": "string",
+    "publicKey": "JHGFFT1545GG",
+    "ovnerId": "kiyiuoy"
 }
 
 Get http://localhost:3000/sensors/all
@@ -79,3 +77,65 @@ Get http://localhost:3000/tx
 Get https://arduino-iot-nem.herokuapp.com/tx
 
 Get https://arduino-iot-nem.herokuapp.com/device/3
+
+
+POST http://localhost:3000/delivery/create HTTP/1.1
+content-type: application/json
+
+{
+  "shipmentId": "fe354543t4",
+  "sensorId": "333",
+  "timeSensor": "Wed, 31 May 2018 09:32:39 GMT",
+  "valueSensor": "236" 
+} 
+
+POST http://localhost:3000/sensor/create HTTP/1.1
+content-type: application/json
+
+{
+  "sensorId": "YFUTjh78",
+  "sensorName": "Weght",
+  "publicKey": "121324wew5",
+  "ovnerId": "yui899i"
+} 
+ 
+POST http://localhost:3000/shipment/create HTTP/1.1
+content-type: application/json
+
+{
+  "shipmentId": "fe354543t4",
+  "startShipmentTime": "string",
+  "buerCurrency": "rere",
+  "payment": "343",
+  "goodsName": "gshsfhs",
+  "quantityOfGoods": "5",
+  "endShipmentTime": "324555433",
+  "buyerPublicKey": "dfssafdfa",
+  "sellerPublicKey": "dfasfdsadgf",
+  "statusShipment": "ferae"
+} 
+
+
+POST http://localhost:3000/account/create HTTP/1.1
+content-type: application/json
+
+{
+  "shipmentsId": "fe354543t4",
+  "name": "buyer",
+  "publicKey": "HGUYIT6785"
+}
+console.log('body.NameMultisig :', body.NameMultisig);
+    console.log('body.consigners :', body.consigners
+
+POST http://localhost:3000/account/create-multisig HTTP/1.1
+content-type: application/json
+
+{
+  "nameMultisigPrivate": "SENSOR_TOTAL_MULTISIG_PRIVATE" 
+  "consigners": [
+    "SENSOR_DRIVE_PUBLIC", "SENSOR_WEIGHT_PUBLIC", 
+    "SENSOR_FINERPRINT_PUBLIC", "SENSOR_TEMP_PUBLIC", 
+    "SENSOR_TOTAL_MULTISIG_PUBLIC",
+    "SENSOR_TRAIN_DRIVER_MULTISIG_PUBLIC"
+    ]
+}     

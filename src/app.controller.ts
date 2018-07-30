@@ -1,17 +1,17 @@
 import { Get, Controller, Post, Param, Body, Res, HttpStatus } from '@nestjs/common';
 require('dotenv').config();
-import { BuyerData } from './common/models/buyer.data'; 
-import { TransactionHelper } from './blockchain/transactionHelper';
-import { SensorAccount } from './common/mijin/sensorAccount';
-import { Conveyor } from './common/helpers/conveyor';
-import { DeviceData } from './common/models/device.data';
-import { AccountHelper } from './blockchain/accountHelper';
-import { AppService } from './app.service';
+//import { BuyerData } from 'common/models/account';
+import { TransactionHelper } from 'blockchain/transactionHelper';
+import { SensorAccount } from 'common/mijin/sensorAccount';
+import { Conveyor } from 'common/helpers/conveyor';
+import { DeviceData } from 'common/models/device.data';
+import { AccountMijinService } from 'blockchain/account.mijin.service';
+import { AppService } from 'app.service';
 
 @Controller()
 export class AppController {
 
-  accountHelper: AccountHelper;
+  accountHelper: AccountMijinService;
   pathTransaction: any;
   pathAccount: any;
   path: any;
@@ -21,7 +21,7 @@ export class AppController {
 
   constructor(private readonly appService: AppService) {
     this.conveyor = new Conveyor();
-    this.accountHelper = new AccountHelper();
+    this.accountHelper = new AccountMijinService();
     this.path = `${process.env.URL}/account/`;
     this.pathAccount = `${this.path}${process.env.TOCKEN_DISTRIBUTOR_PUBLIC_KEY}`;
     this.pathTransaction = `${this.pathAccount}/transactions`;
@@ -81,10 +81,10 @@ export class AppController {
     res.status(HttpStatus.OK).json(newSignal);
   }
 
-  @Post('buyer/prepay')
+  /* @Post('buyer/prepay')
   buyerPrepay(@Body() buyerData: BuyerData, @Res() res) {
     this.conveyor.prepayOfBuyer(buyerData);
     res.status(HttpStatus.OK).json(buyerData);
-  }
+  } */
 
 }

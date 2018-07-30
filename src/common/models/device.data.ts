@@ -5,4 +5,3 @@ export class DeviceData {
     readonly value: number;
     readonly time: string;
   }
-  

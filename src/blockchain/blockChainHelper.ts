@@ -1,6 +1,7 @@
 import { Component } from '@nestjs/common';
 import { BlockchainHttp, Listener, Address } from 'nem2-sdk';
-require('dotenv').config();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 export class BlockcainHelper {
     blockchainHttp: BlockchainHttp;
